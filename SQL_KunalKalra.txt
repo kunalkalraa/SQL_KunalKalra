@@ -274,6 +274,32 @@ INSERT INTO Title
 
 
 
+try{  
+			Class.forName("com.mysql.cj.jdbc.Driver");  //Register // 1
+			System.out.println("11111111");
+			Connection con=DriverManager.getConnection(  
+			"jdbc:mysql://localhost:3306/friday","root","root");  
+			//here sonoo is database name, root is username and password // 2
+			System.out.println("22222222");
+			Statement stmt=con.createStatement();  //3
+			System.out.println("3333333333");
+			ResultSet rs=stmt.executeQuery("select * from student"); //4
+			
+			while(rs.next())
+			{	
+			System.out.println(rs.getInt(1)+"  "+rs.getString(2)+"  "+rs.getString(3)); 
+			}
+			
+			con.close(); //5
+			
+			}
+		catch(Exception e){
+			System.out.println("Jayanth check your program, there is a small error");
+			}
+
+
+
+
 
 
 

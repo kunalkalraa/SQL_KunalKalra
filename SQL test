@@ -1,0 +1,19 @@
+1.select* from workers order by first_name asc;
+
+2.select* from workers order by first_name asc, department desc;
+
+3.select* from workers where first_name not in ("Vipul","Satish");
+
+4.select* from workers where first_name like "______h";
+
+5.select count(worker_id) as count_of_employees from workers where department = "Admin";
+
+6.select first_name, last_name from workers where salary >= 50000 and salary <= 100000;
+
+7.select department, count(worker_id) as no_of_workers from workers group by department;
+
+8.select max(salary) AS fifth_highest_salary FROM ( SELECT DISTINCT salary FROM workers ORDER BY salary DESC LIMIT 5 ) as Temp;
+
+9.select worker_id, first_name, last_name,salary FROM workers WHERE salary IN ( SELECT salary FROM workers GROUP BY salary HAVING COUNT(salary) > 1 ) ORDER BY salary;
+
+10.select department from workers Group by department having COUNT(worker_id) < 3;

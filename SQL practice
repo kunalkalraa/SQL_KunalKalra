@@ -1,0 +1,171 @@
+show databases; create database VIT; drop database vit;
+
+use vit; create table CSE( s_id int, s_name varchar(30), s_mark int );
+
+drop table cse; show tables from vit; select * from cse; insert into cse values(1001, 'Ram Prasad', 99); insert into cse values(1002, 'Riya', 95); insert into cse values(1003, 'Rahul', 80); insert into cse values(1004, 'Aliya', 85); insert into cse values(1005, 'Pihu', 80,'uk');
+
+ALTER TABLE cse ADD( address VARCHAR(200) );
+
+desc cse; Alter table cse drop column address; alter table cse add (s_country varchar(25) default 'India');
+
+update cse set s_name ='Vishnu' where s_id=1002; update cse set s_mark = s_mark+1;
+
+create database practice1; use practice1; create table Mech(s_id int,s_name varchar(25)); START TRANSACTION; insert into Mech values (101,'jayanth'); savepoint A; update mech set s_id = 102 where s_id = 101; savepoint B; insert into mech values(103,'Kartik'); select * from mech;
+
+CREATE DATABASE ORG123; SHOW DATABASES; USE ORG123;
+
+CREATE TABLE Workers ( WORKER_ID INT NOT NULL PRIMARY KEY AUTO_INCREMENT, FIRST_NAME CHAR(25), LAST_NAME CHAR(25), SALARY INT(15), JOINING_DATE DATETIME, DEPARTMENT CHAR(25) );
+
+desc workers;
+
+INSERT INTO Workers (WORKER_ID, FIRST_NAME, LAST_NAME, SALARY, JOINING_DATE, DEPARTMENT) VALUES (001, 'Monika', 'Arora', 100000, '14-02-20 09.00.00', 'HR'), (002, 'Niharika', 'Verma', 80000, '14-06-11 09.00.00', 'Admin'), (003, 'Vishal', 'Singhal', 300000, '14-02-20 09.00.00', 'HR'), (004, 'Amitabh', 'Singh', 500000, '14-02-20 09.00.00', 'Admin'), (005, 'Vivek', 'Bhati', 500000, '14-06-11 09.00.00', 'Admin'), (006, 'Vipul', 'Diwan', 200000, '14-06-11 09.00.00', 'Account'), (007, 'Satish', 'Kumar', 75000, '14-01-20 09.00.00', 'Account'), (008, 'Geetika', 'Chauhan', 90000, '14-04-11 09.00.00', 'Admin'); select * from workers;
+
+SELECT * FROM Workers WHERE SALARY > 100000 AND DEPARTMENT = 'HR';
+
+select salary from workers where salary between 100000 and 200000;
+
+select first_name from workers where worker_id =2 or worker_id=4;
+
+select * from workers where salary between 200000 and 400000 and worker_id not in (1,2,3,4,5);
+
+SELECT min(salary) FROM workers WHERE Department = 'HR';
+
+SELECT FIRST_NAME, LAST_NAME FROM Worker
+WHERE DEPARTMENT = 'HR'
+AND SALARY = (SELECT MIN(SALARY) FROM Worker WHERE DEPARTMENT = 'HR');
+
+Select max(salary), min(salary) from workers where department='Account';
+
+#SELECT COUNT(column_name) #FROM table_name #WHERE condition;
+
+#SELECT AVG(column_name) #FROM table_name #WHERE condition;
+
+#SELECT SUM(column_name) #FROM table_name #WHERE condition;
+
+select * from workers; select distinct(department) from workers;
+
+#alias - Giving some temporary name to a column name select worker_id as emp_Code from worker;
+
+select worker_id from workers union select worker_id from worker;
+
+select worker_id from workers union all select worker_id from worker;
+
+select worker_id from workers union select first_name from worker;
+
+SELECT City FROM Customers UNION SELECT City FROM Suppliers ORDER BY City;
+
+SELECT s_id, s_name FROM cse WHERE s_id=1002 UNION SELECT s_id, s_name FROM mech WHERE s_id=101 ORDER BY s_id;
+
+SELECT DEPARTMENT, WORKER_ID FROM Worker WHERE DEPARTMENT = 'HR'
+
+UNION
+
+SELECT DEPARTMENT, WORKER_ID FROM Worker WHERE DEPARTMENT = 'Account';
+
+SELECT worker_id, first_name,department, CASE WHEN salary > 300000 THEN 'Rich people' WHEN salary <=300000 && salary >=100000 THEN 'Middle stage' ELSE 'Poor people' END AS People_stage_wise FROM worker;
+
+selectfrom worker where department='Admin' order by department; selectfrom worker where department='Admin' order by salary desc limit 3;
+
+select department, count(department) as total_employees from workers where department='HR' or department='Account' group by department;
+
+select department, count(department) as total_employees from worker group by department order by total_employees desc;
+
+create table Persons( ID int primary key, LastName varchar(255) not null unique, FirstName varchar(255) not null unique, Age int);
+
+desc persons;
+
+use org123; CREATE TABLE Student ( sno INT PRIMARY KEY, sname VARCHAR(20), age INT );
+
+INSERT INTO Student(sno, sname,age) VALUES(1,'Ankit',17), (2,'Ramya',18), (3,'Ram',16);
+
+SELECT *FROM Student;
+
+CREATE TABLE Course ( cno INT PRIMARY KEY, cname VARCHAR(20) );
+
+INSERT INTO Course(cno, cname) VALUES(101,'c'), (102,'c++'), (103,'DBMS');
+
+SELECT *FROM Course;
+
+CREATE TABLE Enroll ( sno INT, cno INT, jdate date, PRIMARY KEY(sno,cno), FOREIGN KEY(sno) REFERENCES Student(sno) ON DELETE CASCADE, FOREIGN KEY(cno) REFERENCES Course(cno) ON DELETE CASCADE );
+
+INSERT INTO Enroll(sno,cno,jdate) VALUES(1, 101, '2021-06-05'), (1, 102, '2021-06-05'), (2, 103, '2021-06-06');
+
+SELECT *FROM Enroll;
+
+create database saturday; use saturday;
+
+create table category( c_id int primary key, c_name varchar(25) not null unique, c_decrp varchar(250) not null );
+
+insert into category values (101, 'electronics', 'it stores all set of electronics items'); select * from category; desc category;
+
+CREATE TABLE Products ( P_ID int primary key, p_Name varchar(250) NOT NULL, c_id int , CONSTRAINT c_id FOREIGN KEY (c_id) REFERENCES category(c_id) on delete cascade );
+
+insert into products values (904, 'INTEL I5 Processor', 101); select * from products; delete from category where c_id=101; select * from category; update category set c_name='electrical' where c_id=101;
+
+CREATE TABLE Persons ( ID int NOT NULL, LastName varchar(255) NOT NULL, FirstName varchar(255), Age int, CHECK (Age>=18) );
+
+desc persons;
+
+ALTER TABLE Persons ADD CHECK (Age>=18);
+
+CREATE TABLE Person ( ID int NOT NULL, LastName varchar(255) NOT NULL, FirstName varchar(255), Age int, City varchar(255) DEFAULT 'Coimbatore' );
+
+select * from workers; select*from workers where salary like'8%';
+
+create view admin_more_salary as select * from workers where department='Admin' and salary>100000 order by salary desc;
+
+select * from admin_more_salary;
+
+CREATE TABLE Bonus ( WORKER_REF_ID INT, BONUS_AMOUNT INT(10), BONUS_DATE DATETIME, FOREIGN KEY (WORKER_REF_ID) REFERENCES Workers(WORKER_ID) ON DELETE CASCADE );
+
+INSERT INTO Bonus (WORKER_REF_ID, BONUS_AMOUNT, BONUS_DATE) VALUES (001, 5000, '16-02-20'), (002, 3000, '16-06-11'), (003, 4000, '16-02-20'), (001, 4500, '16-02-20'), (002, 3500, '16-06-11');
+
+select * from workers where first_name not in('Vipul','Satish');
+
+select * from workers where first_name like '%a';
+
+select * from workers where first_name like '______h';
+
+select department,count(worker_id) from workers group by department order by count(worker_id) desc;
+
+SELECT worker_id, first_name from workers UNION ALL SELECT worker_id, first_name from workers;
+
+select department,count(department) from workers where department in('admin','account') group by department;
+
+select count(department) as highest_head_count, department from workers group by department having count(department)>=3;
+
+SELECT department, COUNT(*) AS department_count FROM worker GROUP BY department ORDER BY department_count DESC LIMIT 1 OFFSET 1;
+
+create table vitBhopal (id int primary key, name varchar(20) not null, department varchar(25) not null); insert into vitbhopal values (104,'Karthik','cs'),(103,'Arun','cs');
+
+create table vit (id int primary key, name varchar(20) not null, college varchar(25) not null); insert into vit values (104,'Karthik','chennai'),(103,'Arun','bhopal'); select * from vit;
+
+select * from vitbhopal;
+
+select name as WinnerOfTheYear from vitbhopal where id = (select id from vit where college='bhopal');
+
+Write an SQL query to fetch the departments that have less than five people in it.
+select department,count(department) as People from workers group by department having count(worker_id)<5;
+
+Write an SQL query to fetch the last five records from a table.
+(SELECT * FROM workers ORDER BY worker_ID DESC LIMIT 5) ORDER BY worker_ID ASC;
+
+use saturday;
+
+create table student( s_id int primary key, s_name varchar(30) not null, s_department varchar(25) not null );
+
+insert into student values (1001,"Jayanth","ECE"),(1002,"Praveen","CSE"),(1003,"Logesh","Mech"),(1006,'karthick','Aero'),(1007,"Mahesh","Civil");
+
+select * from student;
+
+create table VIT( s_id int primary key, s_cgpa varchar(5) not null ); insert into vit values (1001,'7.2'),(1002,'8.6'),(1007,'9.25'); select * from vit;
+
+select * from student cross join vit;
+
+select * from student inner join vit where student.s_id = vit.s_id;
+
+select * from student natural join vit;
+
+select * from student left outer join vit on student.s_id = vit.s_id;
+
+select * from student right outer join vit on student.s_id = vit.s_id;
